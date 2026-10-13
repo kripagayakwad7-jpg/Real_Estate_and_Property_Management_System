@@ -1,0 +1,28 @@
+# IDE & OS
+.idea/
+*.iml
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Java / Maven / Gradle
+target/
+build/
+*.class
+*.jar
+*.war
+
+# Spring Boot config with credentials — never commit!
+src/main/resources/application.yml
+src/main/resources/application.properties
+
+# Keep sample config
+!src/main/resources/application-sample.yml
+
+# Logs
+*.log
+logs/
+
+# Node / Frontend
+node_modules/
+dist/
