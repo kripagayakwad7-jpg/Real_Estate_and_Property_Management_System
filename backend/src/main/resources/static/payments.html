@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payments - Real Estate & Property Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+                <i class="fa-solid fa-building-user text-primary fs-4"></i>
+                <span>PropManage<span class="text-primary">Pro</span></span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navMenu">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-3">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html"><i class="fa-solid fa-chart-pie me-1"></i> Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="properties.html"><i class="fa-solid fa-house-chimney me-1"></i> Properties</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="payments.html"><i class="fa-solid fa-receipt me-1"></i> Payments</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <div class="container-fluid px-4 py-4">
+
+        <div class="row g-4">
+            <!-- Record Payment Form (Invokes MySQL Stored Procedure) -->
+            <div class="col-12 col-lg-4">
+                <div class="table-card p-4">
+                    <h5 class="fw-bold mb-1">
+                        <i class="fa-solid fa-credit-card text-primary me-2"></i>Record Rent Payment
+                    </h5>
+                    <p class="text-muted small mb-3">
+                        Invokes MySQL Stored Procedure <code>record_rent_payment</code> inside a database transaction.
+                    </p>
+
+                    <div id="formAlert"></div>
+
+                    <form id="recordPaymentForm">
+                        <div class="mb-3">
+                            <label class="form-label small fw-semibold">Rental Agreement ID</label>
+                            <input type="number" id="agreementId" class="form-control" placeholder="e.g. 1, 2, 4..." required min="1">
+                            <small class="text-muted">Enter agreement ID with pending/overdue rent.</small>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-semibold">Amount to Pay (₹)</label>
+                            <input type="number" id="amount" class="form-control" placeholder="28000" required min="1" step="0.01">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-semibold">Payment Date</label>
+                            <input type="date" id="paymentDate" class="form-control" required>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label small fw-semibold">Payment Mode</label>
+                            <select id="paymentMode" class="form-select" required>
+                                <option value="upi">UPI</option>
+                                <option value="bank_transfer">Bank Transfer (NEFT/RTGS)</option>
+                                <option value="cheque">Cheque</option>
+                                <option value="cash">Cash</option>
+                            </select>
+                        </div>
+                        <button type="submit" id="submitBtn" class="btn btn-primary w-100 shadow-sm">
+                            <i class="fa-solid fa-check me-1"></i> Submit Payment (Runs Stored Procedure)
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Payments History Table -->
+            <div class="col-12 col-lg-8">
+                <div class="table-card">
+                    <div class="card-header d-flex flex-wrap justify-content-between align-items-center gap-2">
+                        <span class="fw-bold">Payment Transactions</span>
+                        <div class="d-flex align-items-center gap-2">
+                            <label class="small text-muted mb-0">Status:</label>
+                            <select id="statusFilter" class="form-select form-select-sm" style="width: 140px;">
+                                <option value="">All</option>
+                                <option value="paid">Paid</option>
+                                <option value="overdue">Overdue</option>
+                                <option value="partial">Partial</option>
+                                <option value="pending">Pending</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Tenant</th>
+                                    <th>Property</th>
+                                    <th>Due</th>
+                                    <th>Paid</th>
+                                    <th>Due Date</th>
+                                    <th>Status</th>
+                                    <th>Mode</th>
+                                </tr>
+                            </thead>
+                            <tbody id="payments-table-body">
+                                <tr><td colspan="8" class="text-center py-4">Loading transactions...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/payments.js"></script>
+    <script>
+        // Set today's date by default
+        document.getElementById('paymentDate').valueAsDate = new Date();
+    </script>
+</body>
+</html>

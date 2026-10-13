@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Estate & Property Management System</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+                <i class="fa-solid fa-building-user text-primary fs-4"></i>
+                <span>PropManage<span class="text-primary">Pro</span></span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navMenu">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-3">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html"><i class="fa-solid fa-chart-pie me-1"></i> Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="properties.html"><i class="fa-solid fa-house-chimney me-1"></i> Properties</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="payments.html"><i class="fa-solid fa-receipt me-1"></i> Payments</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container-fluid px-4 py-4">
+
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h3 class="fw-bold mb-1">Financial & Property Analytics</h3>
+                <p class="text-muted mb-0">Live data derived from MySQL 8.0 complex analytical SQL queries.</p>
+            </div>
+            <div>
+                <a href="payments.html" class="btn btn-primary px-3 shadow-sm">
+                    <i class="fa-solid fa-plus me-1"></i> Record Payment
+                </a>
+            </div>
+        </div>
+
+        <!-- KPI Cards Row -->
+        <div class="row g-3 mb-4">
+            <div class="col-12 col-sm-6 col-xl-3">
+                <div class="kpi-card d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="kpi-label">Total Properties</div>
+                        <div class="kpi-value" id="kpi-total-properties">--</div>
+                    </div>
+                    <div class="kpi-icon bg-primary bg-opacity-10 text-primary">
+                        <i class="fa-solid fa-city"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-xl-3">
+                <div class="kpi-card d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="kpi-label">Occupied Units</div>
+                        <div class="kpi-value text-success" id="kpi-occupied">--</div>
+                    </div>
+                    <div class="kpi-icon bg-success bg-opacity-10 text-success">
+                        <i class="fa-solid fa-key"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-xl-3">
+                <div class="kpi-card d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="kpi-label">Vacant Units</div>
+                        <div class="kpi-value text-danger" id="kpi-vacant">--</div>
+                    </div>
+                    <div class="kpi-icon bg-danger bg-opacity-10 text-danger">
+                        <i class="fa-solid fa-door-open"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-xl-3">
+                <div class="kpi-card d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="kpi-label">Occupancy Rate</div>
+                        <div class="kpi-value text-primary" id="kpi-occupancy-rate">--%</div>
+                    </div>
+                    <div class="kpi-icon bg-info bg-opacity-10 text-info">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Row 1: Monthly Income Trend & Top Properties -->
+        <div class="row g-4 mb-4">
+            <div class="col-12 col-lg-8">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h5 class="chart-title">
+                            <i class="fa-solid fa-arrow-trend-up text-primary me-2"></i>Monthly Rental Income & MoM Growth
+                        </h5>
+                        <small class="badge bg-light text-muted border">CTE + LAG() Window Function</small>
+                    </div>
+                    <div style="height: 320px;">
+                        <canvas id="monthlyIncomeChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-4">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h5 class="chart-title">
+                            <i class="fa-solid fa-pie-chart text-warning me-2"></i>Occupancy Status
+                        </h5>
+                        <small class="badge bg-light text-muted border">Live Distribution</small>
+                    </div>
+                    <div style="height: 320px;">
+                        <canvas id="occupancyChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Row 2: Top Revenue Properties & Expense Breakdown -->
+        <div class="row g-4 mb-4">
+            <div class="col-12 col-lg-7">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h5 class="chart-title">
+                            <i class="fa-solid fa-ranking-star text-success me-2"></i>Top 5 Revenue Properties (Last 12 Months)
+                        </h5>
+                        <small class="badge bg-light text-muted border">GROUP BY + ORDER BY + LIMIT</small>
+                    </div>
+                    <div style="height: 300px;">
+                        <canvas id="topPropertiesChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-5">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h5 class="chart-title">
+                            <i class="fa-solid fa-wallet text-danger me-2"></i>Expenses by Category
+                        </h5>
+                        <small class="badge bg-light text-muted border">Expenses Aggregation</small>
+                    </div>
+                    <div style="height: 300px;">
+                        <canvas id="expenseChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tables Row 1: Overdue Payments Aging & Vacancy Alerts -->
+        <div class="row g-4 mb-4">
+            <div class="col-12 col-lg-7">
+                <div class="table-card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span><i class="fa-solid fa-triangle-exclamation text-danger me-2"></i>Overdue Rent Aging Report</span>
+                        <small class="badge bg-light text-muted border">DATEDIFF + CASE Analysis</small>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Tenant</th>
+                                    <th>Property</th>
+                                    <th>Balance</th>
+                                    <th>Due Date</th>
+                                    <th>Overdue</th>
+                                    <th>Aging Bucket</th>
+                                </tr>
+                            </thead>
+                            <tbody id="overdue-table-body">
+                                <tr><td colspan="6" class="text-center py-3">Loading overdue records...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-5">
+                <div class="table-card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span><i class="fa-solid fa-clock text-warning me-2"></i>Vacancies &gt; 60 Days</span>
+                        <small class="badge bg-light text-muted border">Opportunity Loss</small>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Property</th>
+                                    <th>City</th>
+                                    <th>Rent</th>
+                                    <th>Vacant Since</th>
+                                    <th>Lost Income</th>
+                                </tr>
+                            </thead>
+                            <tbody id="vacant-table-body">
+                                <tr><td colspan="5" class="text-center py-3">Loading vacant properties...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tables Row 2: Property Net Income & Yield Analytics -->
+        <div class="row g-4 mb-4">
+            <div class="col-12 col-lg-7">
+                <div class="table-card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span><i class="fa-solid fa-scale-balanced text-primary me-2"></i>Property Profitability (Rent − Expenses)</span>
+                        <small class="badge bg-light text-muted border">Multi-Table Aggregation</small>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Property</th>
+                                    <th>City</th>
+                                    <th>Type</th>
+                                    <th>Owner</th>
+                                    <th>Rent Collected</th>
+                                    <th>Expenses</th>
+                                    <th>Net Income</th>
+                                </tr>
+                            </thead>
+                            <tbody id="net-income-table-body">
+                                <tr><td colspan="7" class="text-center py-3">Loading profitability data...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-5">
+                <div class="table-card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span><i class="fa-solid fa-percent text-success me-2"></i>Gross Rental Yield (%)</span>
+                        <small class="badge bg-light text-muted border">Annual Rent ÷ Market Value</small>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table align-middle">
+                            <thead>
+                                <tr>
+                                    <th>Property</th>
+                                    <th>City</th>
+                                    <th>Annual Rent</th>
+                                    <th>Valuation</th>
+                                    <th>Yield</th>
+                                    <th>Rating</th>
+                                </tr>
+                            </thead>
+                            <tbody id="yield-table-body">
+                                <tr><td colspan="6" class="text-center py-3">Loading yield analytics...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Chart.js and Bootstrap Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
