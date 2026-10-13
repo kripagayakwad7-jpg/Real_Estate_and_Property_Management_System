@@ -1,5 +1,6 @@
 package com.realestate.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import java.math.BigDecimal;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Property {
 
     @Id
@@ -43,10 +45,10 @@ public class Property {
     private PropertyType propertyType;
 
     @Column(name = "bedrooms")
-    private Integer bedrooms;
+    private Byte bedrooms;
 
     @Column(name = "bathrooms")
-    private Integer bathrooms;
+    private Byte bathrooms;
 
     @Column(name = "area_sqft", precision = 8, scale = 2)
     private BigDecimal areaSqft;

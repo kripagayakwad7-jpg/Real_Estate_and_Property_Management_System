@@ -20,6 +20,10 @@ spring:
         format_sql: true
         dialect: org.hibernate.dialect.MySQLDialect
 
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+
 logging:
   level:
     com.realestate: DEBUG

@@ -15,7 +15,7 @@
     <groupId>com.realestate</groupId>
     <artifactId>real-estate-management</artifactId>
     <version>1.0.0</version>
-    <name>Real Estate & Property Management System</name>
+    <name>Real Estate &amp; Property Management System</name>
     <description>Database-driven system to manage properties, tenants, payments and analytics</description>
 
     <properties>

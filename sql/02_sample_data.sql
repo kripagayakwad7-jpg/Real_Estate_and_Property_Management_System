@@ -214,7 +214,7 @@ INSERT INTO Property_Valuations (property_id, market_value, valuation_date, asse
 -- ============================================================
 -- Verify row counts
 -- ============================================================
-SELECT 'Owners'               AS tbl, COUNT(*) AS rows FROM Owners
+SELECT 'Owners'               AS tbl, COUNT(*) AS row_count FROM Owners
 UNION ALL SELECT 'Properties',        COUNT(*) FROM Properties
 UNION ALL SELECT 'Tenants',           COUNT(*) FROM Tenants
 UNION ALL SELECT 'Rental_Agreements', COUNT(*) FROM Rental_Agreements
