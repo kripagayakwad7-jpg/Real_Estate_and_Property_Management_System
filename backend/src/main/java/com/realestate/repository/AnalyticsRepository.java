@@ -33,8 +33,7 @@ public class AnalyticsRepository {
             FROM Rent_Payments rp
             INNER JOIN Rental_Agreements ra ON rp.agreement_id = ra.agreement_id
             INNER JOIN Properties p         ON ra.property_id  = p.property_id
-            WHERE rp.payment_date >= DATE_SUB(CURDATE(), INTERVAL 12 MONTH)
-              AND rp.status IN ('paid', 'partial')
+            WHERE rp.status IN ('paid', 'partial')
             GROUP BY p.property_id, p.title, p.city, p.property_type
             ORDER BY total_income_12m DESC
             LIMIT 5;
