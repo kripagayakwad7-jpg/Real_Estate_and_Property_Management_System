@@ -1,6 +1,6 @@
 # 🏢 Real Estate & Property Management System
 
-A database-driven application to manage properties, tenants, rental agreements, rent payments, maintenance requests, and property investment analytics.
+A full-stack, database-driven application to manage properties, tenants, rental agreements, rent payments, maintenance requests, and property investment analytics.
 
 ---
 
@@ -8,24 +8,49 @@ A database-driven application to manage properties, tenants, rental agreements, 
 
 | Layer | Technology |
 |---|---|
-| Database | MySQL 8.0+ |
-| Backend | Java 17 + Spring Boot 3 |
-| DB Connectivity | JDBC + Spring Data JPA |
-| Frontend | HTML, CSS, JavaScript (Chart.js) |
-| API Testing | Postman |
+| Database | MySQL 8.0+ (InnoDB, Triggers, Stored Procedures, Views) |
+| Backend | Java 17 + Spring Boot 3 (Spring Data JPA, Hibernate, JDBC) |
+| Frontend | HTML5, CSS3, JavaScript (ES6+), Bootstrap 5, Chart.js |
+| Build Tool | Maven |
+| Version Control | Git + GitHub |
+
+---
+
+## 🏗️ Architecture
+
+```
+[ Frontend: HTML/CSS/JS + Chart.js ]
+                │
+                │ HTTP REST (JSON)
+                ▼
+[ Spring Boot Backend: Controller → Service → Repository ]
+                │
+       ┌────────┴────────┐
+       ▼                 ▼
+[ JPA Repositories ] [ JDBC Analytics Engine ]
+       │                 │
+       └────────┬────────┘
+                │ JDBC / SQL
+                ▼
+     [ MySQL 8.0 Database ]
+     ├── 9 Normalized Tables
+     ├── Stored Procedures (Transactions + Rollback)
+     ├── Triggers (JSON Audit Trail)
+     └── Advanced Analytical Queries (CTEs, Window Functions)
+```
 
 ---
 
 ## 🗃️ Database Schema — 9 Tables
 
 ```
-Owners → Properties → Rental_Agreements → Rent_Payments
-                    ↓                         ↓
-              Maintenance_Requests          Audit_Logs
-                    ↓
-                Expenses
-                    ↓
-          Property_Valuations
+Owners ──< Properties ──< Rental_Agreements ──< Rent_Payments
+                │                                    │
+                ├──< Maintenance_Requests ──< Expenses│
+                │                                    ▼
+                ├──< Property_Valuations         Audit_Logs
+                │
+             Tenants
 ```
 
 | Table | Description |
@@ -37,7 +62,7 @@ Owners → Properties → Rental_Agreements → Rent_Payments
 | `Rent_Payments` | Payment tracking — paid, pending, overdue, partial |
 | `Maintenance_Requests` | Repair/service requests with priority and status |
 | `Expenses` | Cost tracking per property or maintenance request |
-| `Property_Valuations` | Market valuation history for ROI calculations |
+| `Property_Valuations` | Market valuation history for ROI/yield calculations |
 | `Audit_Logs` | JSON-based audit trail of all key data changes |
 
 ---
@@ -47,10 +72,10 @@ Owners → Properties → Rental_Agreements → Rent_Payments
 | File | Description |
 |---|---|
 | [`sql/01_schema.sql`](sql/01_schema.sql) | All 9 table DDLs with constraints, ENUMs, and indexes |
-| [`sql/02_sample_data.sql`](sql/02_sample_data.sql) | Realistic seed data — 5 owners, 15 properties, 12 tenants, 55 payments |
-| [`sql/03_analytical_queries.sql`](sql/03_analytical_queries.sql) | 25 analytical queries demonstrating advanced SQL |
+| [`sql/02_sample_data.sql`](sql/02_sample_data.sql) | Realistic seed data — 5 owners, 15 properties, 12 tenants, 56 payments |
+| [`sql/03_analytical_queries.sql`](sql/03_analytical_queries.sql) | 25 analytical queries demonstrating advanced SQL concepts |
 | [`sql/04_stored_procedures.sql`](sql/04_stored_procedures.sql) | 3 stored procedures with transactions and rollback |
-| [`sql/05_triggers.sql`](sql/05_triggers.sql) | 3 triggers for audit trail and automation |
+| [`sql/05_triggers.sql`](sql/05_triggers.sql) | 3 triggers for audit trail and automated vacancy updates |
 
 ---
 
@@ -106,40 +131,65 @@ Owners → Properties → Rental_Agreements → Rent_Payments
 
 ---
 
-## 🚀 How to Run Locally
+## 🌐 REST API Endpoints
 
-### Prerequisites
-- MySQL 8.0+
-- MySQL Workbench (recommended)
+### Analytics & Reports (Powered by Direct SQL Queries)
+- `GET /api/analytics/occupancy` — Overall occupancy metrics & rates
+- `GET /api/analytics/monthly-income` — Monthly rent totals & MoM % growth (CTE + LAG)
+- `GET /api/analytics/top-properties` — Top 5 revenue properties
+- `GET /api/analytics/overdue-aging` — Overdue rent aging buckets (0–30, 31–60, 60+ days)
+- `GET /api/analytics/net-income` — Net income per property (rent collected − expenses)
+- `GET /api/analytics/yield` — Gross rental yield % against market valuations
+- `GET /api/analytics/vacant-properties` — Long-term vacant properties (> 60 days)
+- `GET /api/analytics/expense-breakdown` — Expenses categorized
+- `GET /api/analytics/owner-portfolios` — Owner property count and income summary
+- `POST /api/analytics/close-lease` — Calls `close_lease` stored procedure
+- `GET /api/analytics/monthly-report` — Calls `get_monthly_report` stored procedure
 
-### Setup Steps
-
-```bash
-# 1. Clone the repository
-git clone https://github.com/kripagayakwad7-jpg/Real_Estate_and_Property_Management_System.git
-
-# 2. Open MySQL Workbench and run files in this order:
-#    sql/01_schema.sql
-#    sql/02_sample_data.sql
-#    sql/04_stored_procedures.sql
-#    sql/05_triggers.sql
-#    sql/03_analytical_queries.sql  ← run queries individually
-```
+### Entity Operations
+- `GET /api/properties` — List/filter properties by status or city
+- `GET /api/tenants` — List tenants
+- `GET /api/payments` — List payment transactions
+- `POST /api/payments/record` — Records a payment (calls `record_rent_payment` stored procedure)
+- `GET /api/maintenance` — List maintenance requests
 
 ---
 
-## 📊 Key SQL Concepts Demonstrated
+## 🚀 How to Run Locally
 
-- ✅ **JOINs** — INNER, LEFT across 4 tables
-- ✅ **GROUP BY + HAVING** — aggregation with filters
-- ✅ **Subqueries** — correlated and scalar
-- ✅ **CTEs** — `WITH` clause for readable multi-step queries
-- ✅ **Window Functions** — `RANK()`, `SUM() OVER`, `LAG()`
-- ✅ **CASE** — conditional classification
-- ✅ **Stored Procedures** — with `TRANSACTION` and `ROLLBACK`
-- ✅ **Triggers** — automated actions with JSON audit logs
-- ✅ **Indexes** — on FKs and high-frequency search columns
-- ✅ **Normalization** — 3NF schema design
+### 1. Database Setup
+```bash
+# Clone the repository
+git clone https://github.com/kripagayakwad7-jpg/Real_Estate_and_Property_Management_System.git
+cd Real_Estate_and_Property_Management_System
+
+# In MySQL Workbench or CLI, run in order:
+mysql -u root -p < sql/01_schema.sql
+mysql -u root -p < sql/02_sample_data.sql
+mysql -u root -p < sql/04_stored_procedures.sql
+mysql -u root -p < sql/05_triggers.sql
+```
+
+### 2. Configure Spring Boot
+Create or update `backend/src/main/resources/application.yml` (template provided in `application-sample.yml`):
+```yaml
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/real_estate_db?useSSL=false&serverTimezone=UTC
+    username: root
+    password: YOUR_PASSWORD
+```
+
+### 3. Run Backend & Frontend
+```bash
+cd backend
+mvn spring-boot:run
+```
+
+Once started:
+- **Interactive Dashboard:** [http://localhost:8080/index.html](http://localhost:8080/index.html)
+- **Properties Directory:** [http://localhost:8080/properties.html](http://localhost:8080/properties.html)
+- **Payment Manager:** [http://localhost:8080/payments.html](http://localhost:8080/payments.html)
 
 ---
 
