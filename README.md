@@ -76,6 +76,7 @@ Owners ──< Properties ──< Rental_Agreements ──< Rent_Payments
 | [`sql/03_analytical_queries.sql`](sql/03_analytical_queries.sql) | 25 analytical queries demonstrating advanced SQL concepts |
 | [`sql/04_stored_procedures.sql`](sql/04_stored_procedures.sql) | 3 stored procedures with transactions and rollback |
 | [`sql/05_triggers.sql`](sql/05_triggers.sql) | 3 triggers for audit trail and automated vacancy updates |
+| [`sql/06_query_optimization.sql`](sql/06_query_optimization.sql) | Query optimization benchmarks with measured `EXPLAIN ANALYZE` metrics |
 
 ---
 
@@ -190,6 +191,10 @@ Once started:
 - **Interactive Dashboard:** [http://localhost:8080/index.html](http://localhost:8080/index.html)
 - **Properties Directory:** [http://localhost:8080/properties.html](http://localhost:8080/properties.html)
 - **Payment Manager:** [http://localhost:8080/payments.html](http://localhost:8080/payments.html)
+- **Maintenance Tickets:** [http://localhost:8080/maintenance.html](http://localhost:8080/maintenance.html)
+
+### 4. API Testing with Postman
+Import [`postman_collection.json`](postman_collection.json) directly into Postman to test all REST endpoints and stored procedures with pre-configured requests.
 
 ---
 

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maintenance - Real Estate & Property Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+                <i class="fa-solid fa-building-user text-primary fs-4"></i>
+                <span>PropManage<span class="text-primary">Pro</span></span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navMenu">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-3">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html"><i class="fa-solid fa-chart-pie me-1"></i> Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="properties.html"><i class="fa-solid fa-house-chimney me-1"></i> Properties</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="payments.html"><i class="fa-solid fa-receipt me-1"></i> Payments</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="maintenance.html"><i class="fa-solid fa-wrench me-1"></i> Maintenance</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container-fluid px-4 py-4">
+
+        <div class="row g-4">
+            <!-- Submit Maintenance Request Form -->
+            <div class="col-12 col-lg-4">
+                <div class="table-card p-4">
+                    <h5 class="fw-bold mb-1">
+                        <i class="fa-solid fa-hammer text-primary me-2"></i>New Maintenance Request
+                    </h5>
+                    <p class="text-muted small mb-3">Submit repair or service tickets linked directly to properties.</p>
+
+                    <div id="formAlert"></div>
+
+                    <form id="maintenanceForm">
+                        <div class="mb-3">
+                            <label class="form-label small fw-semibold">Target Property</label>
+                            <select id="propertySelect" class="form-select" required>
+                                <option value="">Loading properties...</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-semibold">Issue Description</label>
+                            <textarea id="description" class="form-control" rows="3" placeholder="Describe the repair needed..." required></textarea>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label small fw-semibold">Priority Level</label>
+                            <select id="priority" class="form-select" required>
+                                <option value="low">Low</option>
+                                <option value="medium" selected>Medium</option>
+                                <option value="high">High</option>
+                                <option value="urgent">Urgent</option>
+                            </select>
+                        </div>
+                        <button type="submit" id="submitBtn" class="btn btn-primary w-100 shadow-sm">
+                            <i class="fa-solid fa-paper-plane me-1"></i> Submit Request
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Maintenance Requests Table -->
+            <div class="col-12 col-lg-8">
+                <div class="table-card">
+                    <div class="card-header d-flex flex-wrap justify-content-between align-items-center gap-2">
+                        <span class="fw-bold">Service & Repair Tickets</span>
+                        <div class="d-flex align-items-center gap-2">
+                            <label class="small text-muted mb-0">Status:</label>
+                            <select id="statusFilter" class="form-select form-select-sm" style="width: 140px;">
+                                <option value="">All</option>
+                                <option value="open">Open</option>
+                                <option value="in_progress">In Progress</option>
+                                <option value="resolved">Resolved</option>
+                                <option value="closed">Closed</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Property</th>
+                                    <th>Tenant</th>
+                                    <th>Description</th>
+                                    <th>Priority</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody id="maintenance-table-body">
+                                <tr><td colspan="7" class="text-center py-4">Loading maintenance tickets...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/maintenance.js"></script>
+</body>
+</html>

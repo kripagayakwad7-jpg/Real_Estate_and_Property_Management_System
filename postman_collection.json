@@ -1,0 +1,271 @@
+{
+  "info": {
+    "name": "Real Estate & Property Management System API",
+    "description": "Collection of REST API requests for Real Estate & Property Management System built with Spring Boot and MySQL 8.0.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Analytics",
+      "item": [
+        {
+          "name": "Get Occupancy Stats",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/analytics/occupancy",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "analytics", "occupancy"]
+            }
+          }
+        },
+        {
+          "name": "Get Monthly Income & Growth (CTE + LAG)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/analytics/monthly-income",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "analytics", "monthly-income"]
+            }
+          }
+        },
+        {
+          "name": "Get Top 5 Revenue Properties",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/analytics/top-properties",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "analytics", "top-properties"]
+            }
+          }
+        },
+        {
+          "name": "Get Overdue Rent Aging Report",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/analytics/overdue-aging",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "analytics", "overdue-aging"]
+            }
+          }
+        },
+        {
+          "name": "Get Property Net Income (Rent - Expenses)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/analytics/net-income",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "analytics", "net-income"]
+            }
+          }
+        },
+        {
+          "name": "Get Gross Rental Yield Analytics",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/analytics/yield",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "analytics", "yield"]
+            }
+          }
+        },
+        {
+          "name": "Get Vacant Properties (>60 Days)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/analytics/vacant-properties",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "analytics", "vacant-properties"]
+            }
+          }
+        },
+        {
+          "name": "Get Expense Breakdown by Category",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/analytics/expense-breakdown",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "analytics", "expense-breakdown"]
+            }
+          }
+        },
+        {
+          "name": "Get Monthly Report (Procedure Call)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/analytics/monthly-report?year=2024&month=10",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "analytics", "monthly-report"],
+              "query": [
+                { "key": "year", "value": "2024" },
+                { "key": "month", "value": "10" }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Properties",
+      "item": [
+        {
+          "name": "Get All Properties",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/properties",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "properties"]
+            }
+          }
+        },
+        {
+          "name": "Filter Properties by Status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/properties?status=vacant",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "properties"],
+              "query": [
+                { "key": "status", "value": "vacant" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Property by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/properties/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "properties", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Payments",
+      "item": [
+        {
+          "name": "Get All Payments",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/payments",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "payments"]
+            }
+          }
+        },
+        {
+          "name": "Record Rent Payment (Stored Procedure)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/payments/record?agreementId=1&amount=28000.00&paymentDate=2024-12-05&paymentMode=upi",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "payments", "record"],
+              "query": [
+                { "key": "agreementId", "value": "1" },
+                { "key": "amount", "value": "28000.00" },
+                { "key": "paymentDate", "value": "2024-12-05" },
+                { "key": "paymentMode", "value": "upi" }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Maintenance",
+      "item": [
+        {
+          "name": "Get All Maintenance Requests",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/maintenance",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "maintenance"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Tenants",
+      "item": [
+        {
+          "name": "Get All Tenants",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/tenants",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "tenants"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
